@@ -20,18 +20,6 @@ public class DemoDeptUserRelEntity_RO implements Serializable {
             "ORDER BY\n" +
             "\tr.id DESC ";
 
-    public static final String QUERY_SQL_USERBYDEPT = " SELECT\n" +
-            "\tr.id,\n" +
-            "\tr.user_id,\n" +
-            "\tr.dept_id,\n" +
-            "\td.dept_name \n" +
-            "FROM\n" +
-            "\tdemo_dept d\n" +
-            "\tLEFT JOIN demo_dept_user_rel r ON d.dept_id = r.dept_id \n" +
-            "WHERE\n" +
-            "\tr.delete_flag = 0 /*and*/\n" +
-            "ORDER BY\n" +
-            "\tr.id DESC ";
 
     public static void main(String[] args) {
         System.out.println(QUERY_SQL);

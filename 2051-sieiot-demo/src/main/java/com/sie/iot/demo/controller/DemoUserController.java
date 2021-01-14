@@ -91,10 +91,6 @@ public class DemoUserController extends CommonAbstractService {
     public ResponseData findDeptByRo(@RequestBody PaginationRequestData<DemoUserBean> paginationRequestData) {
 //	    UserSessionBean userSessionBean = this.getUserSessionBean();
 //	   AuthorizationCommonUtils.validatorTokenInfo(userSessionBean);
-        Integer pageIndex = paginationRequestData.getPageIndex();
-        Integer pageRows = paginationRequestData.getPageRows();
-        DemoUserBean demoUserBean = paginationRequestData.getParams();
-        JSONObject jsonObject = JSONObject.parseObject(JSONObject.toJSONString(demoUserBean));
         Long Id = paginationRequestData.getParams().getUserId();
         try {
 

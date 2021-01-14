@@ -21,6 +21,11 @@ public interface IDemoDeptUserRel extends IBaseCommon<DemoDeptUserRelEntity_HI>{
 	 * @return
 	 */
 	List<DemoDeptUserRelEntity_RO> findUserListByDeptId(Long deptId);
+	/**
+	 * 通过UserId获取所属部门信息
+	 * @param UserId
+	 * @return
+	 */
 	List<DemoDeptUserRelEntity_RO_Second> findDeptByUserId(Long UserId);
 
 
