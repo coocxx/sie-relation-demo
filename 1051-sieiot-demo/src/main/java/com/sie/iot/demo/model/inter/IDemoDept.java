@@ -15,11 +15,13 @@ public interface IDemoDept extends IBaseCommon<DemoDeptEntity_HI>{
 
 	Pagination<DemoDeptEntity_RO> findRoPagination(JSONObject jsonObject, Integer pageIndex, Integer pageRows, OrderByBean orderByBean);
 
+    Pagination<DemoDeptEntity_RO> findRoDept(JSONObject jsonObject, Integer pageIndex, Integer pageRows, OrderByBean orderByBean);
+
     boolean checkDeptName(String deptName);
 
-    void save(DemoDeptEntity_HI demoDeptEntity_hi, List<Long> userIds);
+    void save(DemoDeptEntity_HI demoDeptEntity_hi, List<Long> userIds);//重写
 
-    void update(DemoDeptEntity_HI demoDeptEntity_hi, List<Long> userIds);
+    void update(DemoDeptEntity_HI demoDeptEntity_hi, List<Long> userIds);//重写
 
-    Pagination<DemoDeptEntity_RO> findRoDept(JSONObject jsonObject, Integer pageIndex, Integer pageRows, OrderByBean orderByBean);
+
 }

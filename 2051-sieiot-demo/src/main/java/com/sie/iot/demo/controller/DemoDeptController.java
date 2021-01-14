@@ -68,7 +68,7 @@ public class DemoDeptController extends CommonAbstractService{
 		try {
 			JSONObject result = new JSONObject();
 		    DemoDeptEntity_HI demoDeptEntity_HI = demoDeptServer.findById(id);
-			result.put("dept",demoDeptEntity_HI);
+			result.put("dept",demoDeptEntity_HI);//demoDeptServer.findById(id)
 			result.put("users",demoDeptUserRelServer.findUserListByDeptId(id));
 		    return new ResponseData(StatusCodeEnum.SUCCESS_CODE.getStatusCode(), result, "查询成功");
 		} catch (Exception e) {
@@ -152,13 +152,13 @@ public class DemoDeptController extends CommonAbstractService{
 		}else{
 			return new ResponseData(StatusCodeEnum.ERROR_CODE.getStatusCode(), "部门名称不能为空");
 		}
-		List<Long> userIds = demoDeptBean.getUserIds();
+		List<Long> userIds = demoDeptBean.getUserIds();//new
 	    DemoDeptEntity_HI demoDeptEntity_HI = JSONObject.parseObject(JSONObject.toJSONString(demoDeptBean),DemoDeptEntity_HI.class);
 	    //固定
 	    demoDeptEntity_HI.setOperatorUserId(1L);
 	    try {
 
-	        demoDeptServer.save(demoDeptEntity_HI,userIds);
+	        demoDeptServer.save(demoDeptEntity_HI,userIds);//new+userIds
 	        return new ResponseData(StatusCodeEnum.SUCCESS_CODE.getStatusCode(), demoDeptEntity_HI, " 保存成功");
 	    }catch (Exception e){
 	        return new ResponseData(StatusCodeEnum.ERROR_CODE.getStatusCode(), " 保存失败【" + e.getMessage() + "】");
@@ -198,7 +198,7 @@ public class DemoDeptController extends CommonAbstractService{
 	        return new ResponseData(StatusCodeEnum.ERROR_CODE.getStatusCode(), " 您所更新的数据不存在");
 	    }
 	    try{
-	        demoDeptServer.update(demoDeptEntity_HI,demoDeptBean.getUserIds());
+	        demoDeptServer.update(demoDeptEntity_HI,demoDeptBean.getUserIds());//new
 	        return new ResponseData(StatusCodeEnum.SUCCESS_CODE.getStatusCode(), demoDeptEntity_HI," 更新成功");
 	    }catch (Exception e){
 	        return new ResponseData(StatusCodeEnum.ERROR_CODE.getStatusCode(), " 保存失败【" + e.getMessage() + "】");

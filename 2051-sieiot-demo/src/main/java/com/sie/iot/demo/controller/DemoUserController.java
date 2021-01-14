@@ -8,9 +8,15 @@ import com.sie.iot.common.bean.RequestData;
 import com.sie.iot.common.iotenum.StatusCodeEnum;
 import com.sie.iot.common.model.inter.IBaseCommon;
 import com.sie.iot.common.services.CommonAbstractService;
+import com.sie.iot.demo.bean.DemoDeptBean;
 import com.sie.iot.demo.bean.DemoUserBean;
+import com.sie.iot.demo.model.entities.DemoDeptUserRelEntity_HI;
 import com.sie.iot.demo.model.entities.DemoUserEntity_HI;
+import com.sie.iot.demo.model.entities.readonly.DemoDeptEntity_RO;
+import com.sie.iot.demo.model.entities.readonly.DemoDeptUserRelEntity_RO;
+import com.sie.iot.demo.model.inter.IDemoDeptUserRel;
 import com.sie.iot.demo.model.inter.IDemoUser;
+import com.sie.iot.demo.model.inter.server.DemoDeptUserRelServer;
 import com.siefw.hibernate.core.paging.Pagination;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -22,6 +28,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/demo-user")
@@ -31,7 +39,10 @@ public class DemoUserController extends CommonAbstractService {
     
     @Autowired
     private IDemoUser demoUserServer;
-    
+    @Autowired
+    private IDemoDeptUserRel demoDeptUserRelServer;
+    @Autowired
+    private DemoDeptUserRelServer demoDeptUserRelServer2;
     @Override
     public IBaseCommon<?> getBaseCommonServer() {
         return this.demoUserServer;
@@ -72,6 +83,26 @@ public class DemoUserController extends CommonAbstractService {
         }catch (Exception e){
             LOGGER.error(" find - pagination error:" + e);
             return new ResponseData(StatusCodeEnum.SUCCESS_CODE.getStatusCode(), "分页查询出错:" + e.getMessage());
+        }
+    }
+    @ApiOperation(value = "通过人员id获取部门", notes = "通过人员id获取部门", httpMethod = "POST")
+    @PostMapping(value = "/find-pagination-dept")
+    public ResponseData findDeptByRo(@RequestBody PaginationRequestData<DemoUserBean> paginationRequestData) {
+//	    UserSessionBean userSessionBean = this.getUserSessionBean();
+//	   AuthorizationCommonUtils.validatorTokenInfo(userSessionBean);
+        Integer pageIndex = paginationRequestData.getPageIndex();
+        Integer pageRows = paginationRequestData.getPageRows();
+        DemoUserBean demoUserBean = paginationRequestData.getParams();
+        JSONObject jsonObject = JSONObject.parseObject(JSONObject.toJSONString(demoUserBean));
+        Long Id = paginationRequestData.getParams().getUserId();
+        try {
+
+            List<DemoDeptUserRelEntity_RO> ddd = demoDeptUserRelServer2.findUserListByDeptId(Id);
+//            List<DemoDeptUserRelEntity_HI> pagination = new List<DemoDeptUserRelEntity_HI>;
+            return new ResponseData(StatusCodeEnum.SUCCESS_CODE.getStatusCode(), ddd, " 分页查询成功");
+        } catch (Exception e) {
+            LOGGER.error(" find - pagination error:" + e);
+            return new ResponseData(StatusCodeEnum.ERROR_CODE.getStatusCode(), "分页查询出错:" + e.getMessage());
         }
     }
     
