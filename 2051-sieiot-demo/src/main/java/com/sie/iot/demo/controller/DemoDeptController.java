@@ -126,6 +126,8 @@ public class DemoDeptController extends CommonAbstractService{
 		DemoDeptBean demoDeptBean = paginationRequestData.getParams();
 		JSONObject jsonObject = JSONObject.parseObject(JSONObject.toJSONString(demoDeptBean));
 		try {
+
+
 			Pagination<DemoDeptEntity_RO> pagination = demoDeptServer.findRoDept(jsonObject, pageIndex, pageRows, paginationRequestData.getOrderByBean());
 			return new ResponseData(StatusCodeEnum.SUCCESS_CODE.getStatusCode(), pagination, " 分页查询成功");
 		} catch (Exception e) {
