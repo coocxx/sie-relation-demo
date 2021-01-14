@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import java.util.List;
 import com.sie.iot.common.bean.OrderByBean;
 import com.sie.iot.demo.model.entities.readonly.DemoDeptUserRelEntity_RO;
+import com.sie.iot.demo.model.entities.readonly.DemoDeptUserRelEntity_RO_Second;
 import com.siefw.hibernate.core.paging.Pagination;
 import com.sie.iot.demo.model.entities.DemoDeptUserRelEntity_HI;
 import com.sie.iot.common.model.inter.IBaseCommon;
@@ -20,6 +21,7 @@ public interface IDemoDeptUserRel extends IBaseCommon<DemoDeptUserRelEntity_HI>{
 	 * @return
 	 */
 	List<DemoDeptUserRelEntity_RO> findUserListByDeptId(Long deptId);
+	List<DemoDeptUserRelEntity_RO_Second> findDeptByUserId(Long UserId);
 
 
 

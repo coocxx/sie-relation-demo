@@ -14,6 +14,7 @@ import com.sie.iot.demo.model.entities.DemoDeptUserRelEntity_HI;
 import com.sie.iot.demo.model.entities.DemoUserEntity_HI;
 import com.sie.iot.demo.model.entities.readonly.DemoDeptEntity_RO;
 import com.sie.iot.demo.model.entities.readonly.DemoDeptUserRelEntity_RO;
+import com.sie.iot.demo.model.entities.readonly.DemoDeptUserRelEntity_RO_Second;
 import com.sie.iot.demo.model.inter.IDemoDeptUserRel;
 import com.sie.iot.demo.model.inter.IDemoUser;
 import com.sie.iot.demo.model.inter.server.DemoDeptUserRelServer;
@@ -97,9 +98,9 @@ public class DemoUserController extends CommonAbstractService {
         Long Id = paginationRequestData.getParams().getUserId();
         try {
 
-            List<DemoDeptUserRelEntity_RO> ddd = demoDeptUserRelServer2.findUserListByDeptId(Id);
+            List<DemoDeptUserRelEntity_RO_Second> demoDeptUserRelEntity_ROs = demoDeptUserRelServer2.findDeptByUserId(Id);
 //            List<DemoDeptUserRelEntity_HI> pagination = new List<DemoDeptUserRelEntity_HI>;
-            return new ResponseData(StatusCodeEnum.SUCCESS_CODE.getStatusCode(), ddd, " 分页查询成功");
+            return new ResponseData(StatusCodeEnum.SUCCESS_CODE.getStatusCode(), demoDeptUserRelEntity_ROs, " 分页查询成功");
         } catch (Exception e) {
             LOGGER.error(" find - pagination error:" + e);
             return new ResponseData(StatusCodeEnum.ERROR_CODE.getStatusCode(), "分页查询出错:" + e.getMessage());

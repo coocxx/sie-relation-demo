@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 import com.sie.iot.common.bean.OrderByBean;
 import com.sie.iot.demo.model.dao.readonly.DemoDeptUserRelDAO_HI_RO;
+import com.sie.iot.demo.model.dao.readonly.DemoDeptUserRelDAO_HI_RO_Second;
 import com.sie.iot.demo.model.entities.readonly.DemoDeptUserRelEntity_RO;
+import com.sie.iot.demo.model.entities.readonly.DemoDeptUserRelEntity_RO_Second;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,8 @@ public class DemoDeptUserRelServer extends BaseCommonServer<DemoDeptUserRelEntit
 	private ViewObject<DemoDeptUserRelEntity_HI> demoDeptUserRelDAO_HI;
 	@Autowired
 	private DemoDeptUserRelDAO_HI_RO demoDeptUserRelDAO_HI_RO;
-
+	@Autowired
+	private DemoDeptUserRelDAO_HI_RO_Second demoDeptUserRelDAO_HI_RO_Second;
 
 	public DemoDeptUserRelServer() {
 		super();
@@ -77,6 +80,10 @@ public class DemoDeptUserRelServer extends BaseCommonServer<DemoDeptUserRelEntit
 	@Override
 	public List<DemoDeptUserRelEntity_RO> findUserListByDeptId(Long deptId) {
 		return demoDeptUserRelDAO_HI_RO.findList(DemoDeptUserRelEntity_RO.QUERY_SQL.replace("/*and*/", "and r.dept_id = ? "), deptId);
+	}
+	@Override
+	public List<DemoDeptUserRelEntity_RO_Second> findDeptByUserId(Long UserId) {
+		return demoDeptUserRelDAO_HI_RO_Second.findList(DemoDeptUserRelEntity_RO_Second.QUERY_SQL_USERBYDEPT.replace("/*and*/", "and r.user_id = ? "), UserId);
 	}
 
 }
