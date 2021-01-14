@@ -8,8 +8,11 @@ import com.sie.iot.common.bean.RequestData;
 import com.sie.iot.common.iotenum.StatusCodeEnum;
 import com.sie.iot.common.model.inter.IBaseCommon;
 import com.sie.iot.common.services.CommonAbstractService;
+import com.sie.iot.demo.bean.DemoDeptBean;
 import com.sie.iot.demo.bean.DemoUserBean;
 import com.sie.iot.demo.model.entities.DemoUserEntity_HI;
+import com.sie.iot.demo.model.entities.readonly.DemoDeptEntity_RO;
+import com.sie.iot.demo.model.entities.readonly.DemoUserEntity_RO;
 import com.sie.iot.demo.model.inter.IDemoUser;
 import com.siefw.hibernate.core.paging.Pagination;
 import io.swagger.annotations.Api;
@@ -133,6 +136,22 @@ public class DemoUserController extends CommonAbstractService {
             return new ResponseData(StatusCodeEnum.SUCCESS_CODE.getStatusCode(), demoUserEntity_HI," 更新成功");
         }catch (Exception e){
             return new ResponseData(StatusCodeEnum.ERROR_CODE.getStatusCode(), " 更新失败【" + e.getMessage() + "】");
+        }
+    }
+
+    @ApiOperation(value = "获取人员所在部门", notes = "获取人员所在部门" , httpMethod = "POST")
+    @PostMapping(value="/find-pagination-dept")
+    public ResponseData findRoByUser (@RequestBody PaginationRequestData<DemoUserBean> paginationRequestData) {
+        Integer pageIndex = paginationRequestData.getPageIndex();
+        Integer pageRows = paginationRequestData.getPageRows();
+        DemoUserBean demoUserBean = paginationRequestData.getParams();
+        JSONObject jsonObject = JSONObject.parseObject(JSONObject.toJSONString(demoUserBean));
+        try {
+            Pagination<DemoUserEntity_RO> pagination = demoUserServer.findRoUser(jsonObject, pageIndex, pageRows, paginationRequestData.getOrderByBean());
+            return new ResponseData(StatusCodeEnum.SUCCESS_CODE.getStatusCode(), pagination, " 分页查询成功");
+        } catch (Exception e) {
+            LOGGER.error(" find - pagination error:" + e);
+            return new ResponseData(StatusCodeEnum.ERROR_CODE.getStatusCode(), "分页查询出错:" + e.getMessage());
         }
     }
 }
