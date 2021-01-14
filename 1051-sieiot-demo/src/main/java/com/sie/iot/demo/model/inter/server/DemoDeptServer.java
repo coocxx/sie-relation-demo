@@ -99,6 +99,26 @@ public class DemoDeptServer extends BaseCommonServer<DemoDeptEntity_HI> implemen
 	}
 
 	@Override
+	public Pagination<DemoDeptEntity_RO> findRoDept(JSONObject jsonObject, Integer pageIndex, Integer pageRows, OrderByBean orderByBean) {
+		StringBuffer sql = new StringBuffer(DemoDeptEntity_RO.QUERY_DEPT);
+		Map<String,Object> params = new HashMap<>();
+		if(ObjectUtil.isNotEmpty(jsonObject.get("deptId"))){
+			sql.append(" AND d.dept_id = " + jsonObject.get("deptId"));
+		}
+		if(StrUtil.isNotEmpty(jsonObject.getString("deptName"))){
+			sql.append(" AND d.dept_name like  '%" + jsonObject.get("deptName") +"%'");
+		}
+		if(orderByBean==null){
+			OrderByBean orderByBeanDefault = new OrderByBean();
+			orderByBeanDefault.setAttributeName("u.creation_date");
+			orderByBeanDefault.setSortType("desc");
+			orderByBean = orderByBeanDefault;
+		}
+		SaafToolUtils.sortUtil(orderByBean, sql);
+		return demoDeptDAO_HI_RO.findPagination(sql, params, pageIndex, pageRows);
+	}
+
+	@Override
     public boolean checkDeptName(String deptName) {
         Map<String,Object> condition = new HashMap<>();
         condition.put("deptName",deptName);

@@ -116,6 +116,24 @@ public class DemoDeptController extends CommonAbstractService{
 		}
 	}
 
+	@ApiOperation(value = "通过部门获取部门人员", notes = "通过部门获取部门人员", httpMethod = "POST")
+	@PostMapping(value = "/find-pagination-user")
+	public ResponseData findRoByDept(@RequestBody PaginationRequestData<DemoDeptBean> paginationRequestData) {
+//	    UserSessionBean userSessionBean = this.getUserSessionBean();
+//	   AuthorizationCommonUtils.validatorTokenInfo(userSessionBean);
+		Integer pageIndex = paginationRequestData.getPageIndex();
+		Integer pageRows = paginationRequestData.getPageRows();
+		DemoDeptBean demoDeptBean = paginationRequestData.getParams();
+		JSONObject jsonObject = JSONObject.parseObject(JSONObject.toJSONString(demoDeptBean));
+		try {
+			Pagination<DemoDeptEntity_RO> pagination = demoDeptServer.findRoDept(jsonObject, pageIndex, pageRows, paginationRequestData.getOrderByBean());
+			return new ResponseData(StatusCodeEnum.SUCCESS_CODE.getStatusCode(), pagination, " 分页查询成功");
+		} catch (Exception e) {
+			LOGGER.error(" find - pagination error:" + e);
+			return new ResponseData(StatusCodeEnum.ERROR_CODE.getStatusCode(), "分页查询出错:" + e.getMessage());
+		}
+	}
+
 
 	@ApiOperation(value = "保存",notes = "保存 ",httpMethod ="POST" )
 	@PostMapping(value = "/save")

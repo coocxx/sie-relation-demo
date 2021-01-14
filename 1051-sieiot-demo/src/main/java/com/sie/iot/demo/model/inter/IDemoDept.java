@@ -21,4 +21,5 @@ public interface IDemoDept extends IBaseCommon<DemoDeptEntity_HI>{
 
     void update(DemoDeptEntity_HI demoDeptEntity_hi, List<Long> userIds);
 
+    Pagination<DemoDeptEntity_RO> findRoDept(JSONObject jsonObject, Integer pageIndex, Integer pageRows, OrderByBean orderByBean);
 }
